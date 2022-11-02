@@ -3,15 +3,28 @@ package com.xxl.job.core.biz.model;
 import java.io.Serializable;
 
 /**
+ * 服务端（admin）调用客户端（自己写的） 回调函数的实体类
  * Created by xuxueli on 17/3/2.
  */
 public class HandleCallbackParam implements Serializable {
     private static final long serialVersionUID = 42L;
 
+    /**
+     * 日志id
+     */
     private long logId;
+    /**
+     * 日志时间
+     */
     private long logDateTim;
 
+    /**
+     * 执行状态
+     */
     private int handleCode;
+    /**
+     * 执行日志
+     */
     private String handleMsg;
 
     public HandleCallbackParam(){}
