@@ -23,6 +23,8 @@ import org.slf4j.LoggerFactory;
 import java.util.concurrent.*;
 
 /**
+ * netty 服务器
+ *
  * Copy from : https://github.com/xuxueli/xxl-rpc
  *
  * @author xuxueli 2020-04-11 21:25

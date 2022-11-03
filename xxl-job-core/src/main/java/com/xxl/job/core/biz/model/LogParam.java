@@ -3,6 +3,8 @@ package com.xxl.job.core.biz.model;
 import java.io.Serializable;
 
 /**
+ * 日志参数实体类
+ *
  * @author xuxueli 2020-04-11 22:27
  */
 public class LogParam implements Serializable {

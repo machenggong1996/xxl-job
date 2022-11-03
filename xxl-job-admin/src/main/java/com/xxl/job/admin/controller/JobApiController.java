@@ -19,6 +19,8 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
+ * 提供给客户端调用的接口
+ *
  * Created by xuxueli on 17/5/10.
  */
 @Controller

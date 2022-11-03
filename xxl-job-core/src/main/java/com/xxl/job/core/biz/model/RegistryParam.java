@@ -3,12 +3,18 @@ package com.xxl.job.core.biz.model;
 import java.io.Serializable;
 
 /**
+ * 注册参数
+ *
  * Created by xuxueli on 2017-05-10 20:22:42
  */
 public class RegistryParam implements Serializable {
     private static final long serialVersionUID = 42L;
 
+    /**
+     * 注册方式
+     */
     private String registryGroup;
+
     private String registryKey;
     private String registryValue;
 

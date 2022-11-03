@@ -3,6 +3,8 @@ package com.xxl.job.core.biz;
 import com.xxl.job.core.biz.model.*;
 
 /**
+ * 客户端的接口 admin项目进行调用
+ *
  * Created by xuxueli on 17/3/1.
  */
 public interface ExecutorBiz {

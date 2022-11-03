@@ -7,6 +7,8 @@ import com.xxl.job.core.biz.model.ReturnT;
 import java.util.List;
 
 /**
+ * 回调回来相关 admin项目的接口
+ *
  * @author xuxueli 2017-07-27 21:52:49
  */
 public interface AdminBiz {

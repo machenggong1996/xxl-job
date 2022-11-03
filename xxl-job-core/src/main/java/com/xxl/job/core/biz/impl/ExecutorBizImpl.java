@@ -27,11 +27,17 @@ public class ExecutorBizImpl implements ExecutorBiz {
         return ReturnT.SUCCESS;
     }
 
+    /**
+     * 判断任务id的线程是不是运行或者在队列里面
+     * @param idleBeatParam
+     * @return
+     */
     @Override
     public ReturnT<String> idleBeat(IdleBeatParam idleBeatParam) {
 
-        // isRunningOrHasQueue
+        // isRunningOrHasQueue 是正在运行或者在队列里面
         boolean isRunningOrHasQueue = false;
+        // 从map里面获取任务id的线程
         JobThread jobThread = XxlJobExecutor.loadJobThread(idleBeatParam.getJobId());
         if (jobThread != null && jobThread.isRunningOrHasQueue()) {
             isRunningOrHasQueue = true;
@@ -43,6 +49,11 @@ public class ExecutorBizImpl implements ExecutorBiz {
         return ReturnT.SUCCESS;
     }
 
+    /**
+     * 触发任务执行
+     * @param triggerParam
+     * @return
+     */
     @Override
     public ReturnT<String> run(TriggerParam triggerParam) {
         // load old：jobHandler + jobThread
@@ -51,10 +62,12 @@ public class ExecutorBizImpl implements ExecutorBiz {
         String removeOldReason = null;
 
         // valid：jobHandler + jobThread
+        // 运行模式
         GlueTypeEnum glueTypeEnum = GlueTypeEnum.match(triggerParam.getGlueType());
         if (GlueTypeEnum.BEAN == glueTypeEnum) {
 
             // new jobhandler
+            // 把方法变成一个实体类
             IJobHandler newJobHandler = XxlJobExecutor.loadJobHandler(triggerParam.getExecutorHandler());
 
             // valid old jobThread
@@ -120,6 +133,7 @@ public class ExecutorBizImpl implements ExecutorBiz {
 
         // executor block strategy
         if (jobThread != null) {
+            // 阻塞处理策略
             ExecutorBlockStrategyEnum blockStrategy = ExecutorBlockStrategyEnum.match(triggerParam.getExecutorBlockStrategy(), null);
             if (ExecutorBlockStrategyEnum.DISCARD_LATER == blockStrategy) {
                 // discard when running
@@ -148,6 +162,12 @@ public class ExecutorBizImpl implements ExecutorBiz {
         return pushResult;
     }
 
+    /**
+     * 停止线程
+     *
+     * @param killParam
+     * @return
+     */
     @Override
     public ReturnT<String> kill(KillParam killParam) {
         // kill handlerThread, and create new one
@@ -160,6 +180,12 @@ public class ExecutorBizImpl implements ExecutorBiz {
         return new ReturnT<String>(ReturnT.SUCCESS_CODE, "job thread already killed.");
     }
 
+    /**
+     * 读取日志信息
+     *
+     * @param logParam
+     * @return
+     */
     @Override
     public ReturnT<LogResult> log(LogParam logParam) {
         // log filename: logPath/yyyy-MM-dd/9999.log

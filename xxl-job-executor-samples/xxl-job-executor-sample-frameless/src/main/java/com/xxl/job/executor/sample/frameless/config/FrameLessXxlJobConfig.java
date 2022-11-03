@@ -49,6 +49,7 @@ public class FrameLessXxlJobConfig {
 
         // start executor
         try {
+            // 启动netty服务器
             xxlJobExecutor.start();
         } catch (Exception e) {
             logger.error(e.getMessage(), e);

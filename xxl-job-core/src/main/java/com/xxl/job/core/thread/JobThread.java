@@ -29,6 +29,7 @@ public class JobThread extends Thread{
 
 	private int jobId;
 	private IJobHandler handler;
+	// 任务队列
 	private LinkedBlockingQueue<TriggerParam> triggerQueue;
 	private Set<Long> triggerLogIdSet;		// avoid repeat trigger for the same TRIGGER_LOG_ID
 

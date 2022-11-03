@@ -3,6 +3,8 @@ package com.xxl.job.core.biz.model;
 import java.io.Serializable;
 
 /**
+ * 触发器参数 对应的是任务新增的哪些参数
+ *
  * Created by xuxueli on 16/7/22.
  */
 public class TriggerParam implements Serializable{
@@ -10,6 +12,9 @@ public class TriggerParam implements Serializable{
 
     private int jobId;
 
+    /**
+     * 定时任务的jobHandler
+     */
     private String executorHandler;
     private String executorParams;
     private String executorBlockStrategy;

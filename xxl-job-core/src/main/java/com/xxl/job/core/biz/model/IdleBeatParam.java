@@ -3,6 +3,8 @@ package com.xxl.job.core.biz.model;
 import java.io.Serializable;
 
 /**
+ * 任务id实体类 xxl_job_info
+ *
  * @author xuxueli 2020-04-11 22:27
  */
 public class IdleBeatParam implements Serializable {

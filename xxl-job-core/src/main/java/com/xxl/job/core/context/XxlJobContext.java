@@ -3,6 +3,8 @@ package com.xxl.job.core.context;
 /**
  * xxl-job context
  *
+ * 上下文处理器 ThreadLocal
+ *
  * @author xuxueli 2020-05-21
  * [Dear hj]
  */
