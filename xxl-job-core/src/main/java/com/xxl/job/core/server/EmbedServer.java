@@ -142,6 +142,12 @@ public class EmbedServer {
             this.bizThreadPool = bizThreadPool;
         }
 
+        /**
+         * 接收请求
+         * @param ctx
+         * @param msg
+         * @throws Exception
+         */
         @Override
         protected void channelRead0(final ChannelHandlerContext ctx, FullHttpRequest msg) throws Exception {
             // request parse
@@ -185,9 +191,9 @@ public class EmbedServer {
             // services mapping
             try {
                 switch (uri) {
-                    case "/beat":
+                    case "/beat": // admin项目调用自己项目 维持心跳
                         return executorBiz.beat();
-                    case "/idleBeat":
+                    case "/idleBeat": // 判断任务id线程是不是运行或者在队列里面
                         IdleBeatParam idleBeatParam = GsonTool.fromJson(requestData, IdleBeatParam.class);
                         return executorBiz.idleBeat(idleBeatParam);
                     case "/run":

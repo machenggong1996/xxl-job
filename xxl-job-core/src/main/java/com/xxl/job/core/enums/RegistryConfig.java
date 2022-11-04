@@ -1,6 +1,8 @@
 package com.xxl.job.core.enums;
 
 /**
+ * 任务超时时间
+ *
  * Created by xuxueli on 17/5/10.
  */
 public class RegistryConfig {

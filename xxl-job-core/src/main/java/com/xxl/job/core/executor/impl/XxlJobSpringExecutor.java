@@ -81,7 +81,7 @@ public class XxlJobSpringExecutor extends XxlJobExecutor implements ApplicationC
         if (applicationContext == null) {
             return;
         }
-        // init job handler from method
+        // init job handler from method 获取所有的bean的name
         String[] beanDefinitionNames = applicationContext.getBeanNamesForType(Object.class, false, true);
         for (String beanDefinitionName : beanDefinitionNames) {
 
@@ -95,7 +95,7 @@ public class XxlJobSpringExecutor extends XxlJobExecutor implements ApplicationC
                 bean = applicationContext.getBean(beanDefinitionName);
             }
 
-            // filter method
+            // filter method 找bean里面的方法上有@XxlJob注解的方法 key是方法
             Map<Method, XxlJob> annotatedMethods = null;   // referred to ：org.springframework.context.event.EventListenerMethodProcessor.processBean
             try {
                 annotatedMethods = MethodIntrospector.selectMethods(bean.getClass(),
@@ -113,6 +113,7 @@ public class XxlJobSpringExecutor extends XxlJobExecutor implements ApplicationC
             }
 
             // generate and regist method job handler
+            // 注册
             for (Map.Entry<Method, XxlJob> methodXxlJobEntry : annotatedMethods.entrySet()) {
                 Method executeMethod = methodXxlJobEntry.getKey();
                 XxlJob xxlJob = methodXxlJobEntry.getValue();

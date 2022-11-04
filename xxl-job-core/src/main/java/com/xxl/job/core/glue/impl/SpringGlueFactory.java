@@ -20,6 +20,8 @@ public class SpringGlueFactory extends GlueFactory {
 
 
     /**
+     * 解析spring代码
+     *
      * inject action of spring
      * @param instance
      */

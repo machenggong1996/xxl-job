@@ -1,6 +1,8 @@
 package com.xxl.job.core.glue;
 
 /**
+ * 脚本枚举
+ *
  * Created by xuxueli on 17/4/26.
  */
 public enum GlueTypeEnum {

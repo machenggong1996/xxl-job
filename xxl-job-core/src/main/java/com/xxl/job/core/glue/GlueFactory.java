@@ -10,6 +10,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 /**
+ * 脚本运行
  * glue factory, product class/object by name
  *
  * @author xuxueli 2016-1-2 20:02:27
@@ -39,12 +40,15 @@ public class GlueFactory {
 	/**
 	 * load new instance, prototype
 	 *
+	 * 根据源代码创建IJobHandler对象
+	 *
 	 * @param codeSource
 	 * @return
 	 * @throws Exception
 	 */
 	public IJobHandler loadNewInstance(String codeSource) throws Exception{
 		if (codeSource!=null && codeSource.trim().length()>0) {
+			// 加载源码
 			Class<?> clazz = getCodeSourceClass(codeSource);
 			if (clazz != null) {
 				Object instance = clazz.newInstance();
@@ -61,6 +65,8 @@ public class GlueFactory {
 		}
 		throw new IllegalArgumentException(">>>>>>>>>>> xxl-glue, loadNewInstance error, instance is null");
 	}
+
+
 	private Class<?> getCodeSourceClass(String codeSource){
 		try {
 			// md5

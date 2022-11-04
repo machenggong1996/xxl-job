@@ -23,19 +23,24 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 /**
+ * 启动 注册 停止
+ *
  * Created by xuxueli on 2016/3/2 21:14.
  */
 public class XxlJobExecutor  {
     private static final Logger logger = LoggerFactory.getLogger(XxlJobExecutor.class);
 
     // ---------------------- param ----------------------
+    // admin服务地址
     private String adminAddresses;
     private String accessToken;
+    // 项目名称
     private String appname;
     private String address;
     private String ip;
     private int port;
     private String logPath;
+    // 日志保留天数
     private int logRetentionDays;
 
     public void setAdminAddresses(String adminAddresses) {
@@ -80,7 +85,7 @@ public class XxlJobExecutor  {
         // init TriggerCallbackThread
         TriggerCallbackThread.getInstance().start();
 
-        // init executor-server
+        // init executor-server 初始化netty服务
         initEmbedServer(address, ip, port, appname, accessToken);
     }
 
@@ -116,6 +121,9 @@ public class XxlJobExecutor  {
 
 
     // ---------------------- admin-client (rpc invoker) ----------------------
+    /**
+     * admin集群
+     */
     private static List<AdminBiz> adminBizList;
     private void initAdminBizList(String adminAddresses, String accessToken) throws Exception {
         if (adminAddresses!=null && adminAddresses.trim().length()>0) {
@@ -183,6 +191,14 @@ public class XxlJobExecutor  {
         logger.info(">>>>>>>>>>> xxl-job register jobhandler success, name:{}, jobHandler:{}", name, jobHandler);
         return jobHandlerRepository.put(name, jobHandler);
     }
+
+    /**
+     * 注册Handler
+     *
+     * @param xxlJob
+     * @param bean
+     * @param executeMethod
+     */
     protected void registJobHandler(XxlJob xxlJob, Object bean, Method executeMethod){
         if (xxlJob == null) {
             return;
@@ -241,6 +257,7 @@ public class XxlJobExecutor  {
     // ---------------------- job thread repository ----------------------
     private static ConcurrentMap<Integer, JobThread> jobThreadRepository = new ConcurrentHashMap<Integer, JobThread>();
     public static JobThread registJobThread(int jobId, IJobHandler handler, String removeOldReason){
+        // 创建线程
         JobThread newJobThread = new JobThread(jobId, handler);
         newJobThread.start();
         logger.info(">>>>>>>>>>> xxl-job regist JobThread success, jobId:{}, handler:{}", new Object[]{jobId, handler});

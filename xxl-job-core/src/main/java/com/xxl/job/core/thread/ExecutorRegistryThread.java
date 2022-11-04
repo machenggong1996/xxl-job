@@ -11,6 +11,8 @@ import org.slf4j.LoggerFactory;
 import java.util.concurrent.TimeUnit;
 
 /**
+ * 注册线程 项目地址注册到admin服务
+ *
  * Created by xuxueli on 17/3/2.
  */
 public class ExecutorRegistryThread {
@@ -45,6 +47,7 @@ public class ExecutorRegistryThread {
                         RegistryParam registryParam = new RegistryParam(RegistryConfig.RegistType.EXECUTOR.name(), appname, address);
                         for (AdminBiz adminBiz: XxlJobExecutor.getAdminBizList()) {
                             try {
+                                // 注册到admin项目 发http请求
                                 ReturnT<String> registryResult = adminBiz.registry(registryParam);
                                 if (registryResult!=null && ReturnT.SUCCESS_CODE == registryResult.getCode()) {
                                     registryResult = ReturnT.SUCCESS;

@@ -14,6 +14,8 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * job file clean thread
+ * 日志文件清除线程 日志如果超过设置的保留时间 就删除
+ * 我们自己的项目启动的时候调用
  *
  * @author xuxueli 2017-12-29 16:23:43
  */
@@ -73,7 +75,7 @@ public class JobLogFileCleanThread {
                                 if (logFileCreateDate == null) {
                                     continue;
                                 }
-
+                                // 比较删除
                                 if ((todayDate.getTime()-logFileCreateDate.getTime()) >= logRetentionDays * (24 * 60 * 60 * 1000) ) {
                                     FileUtil.deleteRecursively(childFile);
                                 }

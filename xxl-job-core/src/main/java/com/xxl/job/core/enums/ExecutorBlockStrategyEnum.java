@@ -1,6 +1,8 @@
 package com.xxl.job.core.enums;
 
 /**
+ * 阻塞策略 admin系统配置
+ *
  * Created by xuxueli on 17/5/9.
  */
 public enum ExecutorBlockStrategyEnum {

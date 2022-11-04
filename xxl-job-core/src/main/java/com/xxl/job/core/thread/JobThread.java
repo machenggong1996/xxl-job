@@ -22,6 +22,8 @@ import java.util.concurrent.*;
 
 /**
  * handler thread
+ *
+ * 任务执行线程
  * @author xuxueli 2016-1-16 19:52:47
  */
 public class JobThread extends Thread{
@@ -120,6 +122,7 @@ public class JobThread extends Thread{
 
 					// log filename, like "logPath/yyyy-MM-dd/9999.log"
 					String logFileName = XxlJobFileAppender.makeLogFileName(new Date(triggerParam.getLogDateTime()), triggerParam.getLogId());
+					// 创建上下文
 					XxlJobContext xxlJobContext = new XxlJobContext(
 							triggerParam.getJobId(),
 							triggerParam.getExecutorParams(),

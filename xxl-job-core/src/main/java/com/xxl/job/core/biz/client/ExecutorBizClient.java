@@ -5,7 +5,7 @@ import com.xxl.job.core.biz.model.*;
 import com.xxl.job.core.util.XxlJobRemotingUtil;
 
 /**
- * admin api test
+ * admin api test admin项目调用
  *
  * @author xuxueli 2017-07-28 22:14:52
  */

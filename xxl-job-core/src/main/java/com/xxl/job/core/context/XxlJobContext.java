@@ -3,7 +3,7 @@ package com.xxl.job.core.context;
 /**
  * xxl-job context
  *
- * 上下文处理器 ThreadLocal
+ * 上下文处理器 ThreadLocal 创建线程的时候初始化
  *
  * @author xuxueli 2020-05-21
  * [Dear hj]

@@ -101,6 +101,8 @@ public class XxlJobHelper {
     /**
      * append log with pattern
      *
+     * 记录日志的方法
+     *
      * @param appendLogPattern  like "aaa {} bbb {} ccc"
      * @param appendLogArguments    like "111, true"
      */
