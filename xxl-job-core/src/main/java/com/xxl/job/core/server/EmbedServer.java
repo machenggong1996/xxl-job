@@ -83,7 +83,7 @@ public class EmbedServer {
 
                     logger.info(">>>>>>>>>>> xxl-job remoting server start success, nettype = {}, port = {}", EmbedServer.class, port);
 
-                    // start registry
+                    // start registry 向admin服务注册自己
                     startRegistry(appname, address);
 
                     // wait util stop
@@ -132,8 +132,10 @@ public class EmbedServer {
     public static class EmbedHttpServerHandler extends SimpleChannelInboundHandler<FullHttpRequest> {
         private static final Logger logger = LoggerFactory.getLogger(EmbedHttpServerHandler.class);
 
+        // 客户端调用
         private ExecutorBiz executorBiz;
         private String accessToken;
+        // 线程池
         private ThreadPoolExecutor bizThreadPool;
 
         public EmbedHttpServerHandler(ExecutorBiz executorBiz, String accessToken, ThreadPoolExecutor bizThreadPool) {
@@ -196,7 +198,7 @@ public class EmbedServer {
                     case "/idleBeat": // 判断任务id线程是不是运行或者在队列里面
                         IdleBeatParam idleBeatParam = GsonTool.fromJson(requestData, IdleBeatParam.class);
                         return executorBiz.idleBeat(idleBeatParam);
-                    case "/run":
+                    case "/run": // 任务执行
                         TriggerParam triggerParam = GsonTool.fromJson(requestData, TriggerParam.class);
                         return executorBiz.run(triggerParam);
                     case "/kill":

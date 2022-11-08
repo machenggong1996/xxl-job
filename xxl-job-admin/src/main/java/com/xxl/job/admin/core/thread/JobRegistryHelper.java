@@ -155,15 +155,17 @@ public class JobRegistryHelper {
 			return new ReturnT<String>(ReturnT.FAIL_CODE, "Illegal Argument.");
 		}
 
-		// async execute
+		// async execute 异步执行
 		registryOrRemoveThreadPool.execute(new Runnable() {
 			@Override
 			public void run() {
+				// 先更新
 				int ret = XxlJobAdminConfig.getAdminConfig().getXxlJobRegistryDao().registryUpdate(registryParam.getRegistryGroup(), registryParam.getRegistryKey(), registryParam.getRegistryValue(), new Date());
 				if (ret < 1) {
+					// 注册
 					XxlJobAdminConfig.getAdminConfig().getXxlJobRegistryDao().registrySave(registryParam.getRegistryGroup(), registryParam.getRegistryKey(), registryParam.getRegistryValue(), new Date());
 
-					// fresh
+					// fresh 刷新
 					freshGroupRegistryInfo(registryParam);
 				}
 			}

@@ -13,7 +13,7 @@ public class TriggerParam implements Serializable{
     private int jobId;
 
     /**
-     * 定时任务的jobHandler
+     * 定时任务的jobHandlerc
      */
     private String executorHandler;
     private String executorParams;

@@ -79,7 +79,7 @@ public class XxlJobExecutor  {
         initAdminBizList(adminAddresses, accessToken);
 
 
-        // init JobLogFileCleanThread
+        // init JobLogFileCleanThread 日志过期删除
         JobLogFileCleanThread.getInstance().start(logRetentionDays);
 
         // init TriggerCallbackThread
@@ -259,6 +259,7 @@ public class XxlJobExecutor  {
     public static JobThread registJobThread(int jobId, IJobHandler handler, String removeOldReason){
         // 创建线程
         JobThread newJobThread = new JobThread(jobId, handler);
+        // 启动线程
         newJobThread.start();
         logger.info(">>>>>>>>>>> xxl-job regist JobThread success, jobId:{}, handler:{}", new Object[]{jobId, handler});
 
