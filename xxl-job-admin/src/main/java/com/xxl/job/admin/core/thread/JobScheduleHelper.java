@@ -38,7 +38,7 @@ public class JobScheduleHelper {
     private volatile boolean ringThreadToStop = false;
     // 任务列表
     // 时间轮数据 本质是 保存快要执行的任务
-    // key 为执行的秒 value为要执行的job id
+    // key 0-59 为执行的秒 value为要执行的job id
     // 未过期的任务，在5s的时间范围内，精确的调度都被交给了时间轮线程
     private volatile static Map<Integer, List<Integer>> ringData = new ConcurrentHashMap<>();
 
@@ -94,7 +94,7 @@ public class JobScheduleHelper {
                         if (scheduleList!=null && scheduleList.size()>0) {
                             // 2、push time-ring
                             for (XxlJobInfo jobInfo: scheduleList) {
-                                // 任务分三个阶段
+                                // 任务分三个阶段 前两个阶段是超时的情况尝试触发， 最后一个阶段是未到执行时间 直接放到时间轮
                                 // time-ring jump
                                 // 如果当前时间已经超过了任务原定计划时间+5s的范围，则跳过，本次不再执行。
                                 if (nowTime > jobInfo.getTriggerNextTime() + PRE_READ_MS) {
