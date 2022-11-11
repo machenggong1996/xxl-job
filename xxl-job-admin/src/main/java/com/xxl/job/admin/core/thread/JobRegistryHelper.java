@@ -32,6 +32,7 @@ public class JobRegistryHelper {
 	public void start(){
 
 		// for registry or remove
+		// 初始化注册或者删除线程池
 		registryOrRemoveThreadPool = new ThreadPoolExecutor(
 				2,
 				10,
@@ -62,7 +63,7 @@ public class JobRegistryHelper {
 						List<XxlJobGroup> groupList = XxlJobAdminConfig.getAdminConfig().getXxlJobGroupDao().findByAddressType(0);
 						if (groupList!=null && !groupList.isEmpty()) {
 
-							// remove dead address (admin/executor)
+							// remove dead address (admin/executor) 超时90秒的移除掉
 							List<Integer> ids = XxlJobAdminConfig.getAdminConfig().getXxlJobRegistryDao().findDead(RegistryConfig.DEAD_TIMEOUT, new Date());
 							if (ids!=null && ids.size()>0) {
 								XxlJobAdminConfig.getAdminConfig().getXxlJobRegistryDao().removeDead(ids);
@@ -73,7 +74,9 @@ public class JobRegistryHelper {
 							List<XxlJobRegistry> list = XxlJobAdminConfig.getAdminConfig().getXxlJobRegistryDao().findAll(RegistryConfig.DEAD_TIMEOUT, new Date());
 							if (list != null) {
 								for (XxlJobRegistry item: list) {
+									// 如果是自动注册
 									if (RegistryConfig.RegistType.EXECUTOR.name().equals(item.getRegistryGroup())) {
+										// 项目名称
 										String appname = item.getRegistryKey();
 										List<String> registryList = appAddressMap.get(appname);
 										if (registryList == null) {
@@ -113,6 +116,7 @@ public class JobRegistryHelper {
 						}
 					}
 					try {
+						// 30秒执行一次
 						TimeUnit.SECONDS.sleep(RegistryConfig.BEAT_TIMEOUT);
 					} catch (InterruptedException e) {
 						if (!toStop) {

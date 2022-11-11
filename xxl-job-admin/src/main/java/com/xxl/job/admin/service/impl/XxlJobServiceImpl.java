@@ -350,6 +350,7 @@ public class XxlJobServiceImpl implements XxlJobService {
 
 		int jobInfoCount = xxlJobInfoDao.findAllCount();
 		int jobLogCount = 0;
+		// 成功的数量
 		int jobLogSuccessCount = 0;
 		XxlJobLogReport xxlJobLogReport = xxlJobLogReportDao.queryLogReportTotal();
 		if (xxlJobLogReport != null) {

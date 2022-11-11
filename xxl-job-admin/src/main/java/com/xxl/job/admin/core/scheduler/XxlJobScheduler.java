@@ -13,6 +13,8 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 /**
+ * 调度器
+ *
  * @author xuxueli 2018-10-28 00:18:17
  */
 
@@ -24,22 +26,26 @@ public class XxlJobScheduler  {
         // init i18n
         initI18n();
 
+        // 初始化触发器线程池 两个线程池
         // admin trigger pool start
         JobTriggerPoolHelper.toStart();
 
-        // admin registry monitor run
+        // admin registry monitor run 30秒执行一次,维护注册表信息， 判断在线超时时间90s
+        // 保证注册的服务都是运行的
+        // 清除90s内未再次注册的服务
         JobRegistryHelper.getInstance().start();
 
-        // admin fail-monitor run
+        // admin fail-monitor run 运行事变监视器,主要失败发送邮箱,重试触发器
         JobFailMonitorHelper.getInstance().start();
 
         // admin lose-monitor run ( depend on JobTriggerPoolHelper )
+        // 将丢失主机信息调度日志更改状态
         JobCompleteHelper.getInstance().start();
 
-        // admin log report start
+        // admin log report start 统计一些失败成功报表 报表统计
         JobLogReportHelper.getInstance().start();
 
-        // start-schedule  ( depend on JobTriggerPoolHelper )
+        // start-schedule  ( depend on JobTriggerPoolHelper ) 执行调度器
         JobScheduleHelper.getInstance().start();
 
         logger.info(">>>>>>>>> init xxl-job admin success.");

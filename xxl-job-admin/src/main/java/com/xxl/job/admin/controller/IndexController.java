@@ -35,6 +35,11 @@ public class IndexController {
 	private LoginService loginService;
 
 
+	/**
+	 * 运行报表
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping("/")
 	public String index(Model model) {
 
@@ -44,6 +49,12 @@ public class IndexController {
 		return "index";
 	}
 
+	/**
+	 * 调度报表
+	 * @param startDate
+	 * @param endDate
+	 * @return
+	 */
     @RequestMapping("/chartInfo")
 	@ResponseBody
 	public ReturnT<Map<String, Object>> chartInfo(Date startDate, Date endDate) {

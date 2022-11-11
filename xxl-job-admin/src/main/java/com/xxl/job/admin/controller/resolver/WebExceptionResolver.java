@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * common exception resolver
+ * common exception resolver 异常处理
  *
  * @author xuxueli 2016-1-6 19:22:18
  */
