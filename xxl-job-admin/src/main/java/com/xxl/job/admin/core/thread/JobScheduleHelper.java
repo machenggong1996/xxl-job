@@ -89,7 +89,7 @@ public class JobScheduleHelper {
                         // 1、pre read
                         long nowTime = System.currentTimeMillis();
                         // 获取当前时间 +5s 的任务 限制 preReadCount条数
-                        // 根据预读数量和预读时间，取出即将要处理的任务。
+                        // 根据预读数量和预读时间，取出即将要处理的任务。 6000条数据
                         List<XxlJobInfo> scheduleList = XxlJobAdminConfig.getAdminConfig().getXxlJobInfoDao().scheduleJobQuery(nowTime + PRE_READ_MS, preReadCount);
                         if (scheduleList!=null && scheduleList.size()>0) {
                             // 2、push time-ring
