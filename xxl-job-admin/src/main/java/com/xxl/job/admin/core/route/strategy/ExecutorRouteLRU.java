@@ -19,7 +19,9 @@ import java.util.concurrent.ConcurrentMap;
  */
 public class ExecutorRouteLRU extends ExecutorRouter {
 
+    // <jobId,<地址,地址>>
     private static ConcurrentMap<Integer, LinkedHashMap<String, String>> jobLRUMap = new ConcurrentHashMap<Integer, LinkedHashMap<String, String>>();
+    // 过期时间戳
     private static long CACHE_VALID_TIME = 0;
 
     public String route(int jobId, List<String> addressList) {
@@ -30,7 +32,7 @@ public class ExecutorRouteLRU extends ExecutorRouter {
             CACHE_VALID_TIME = System.currentTimeMillis() + 1000*60*60*24;
         }
 
-        // init lru
+        // init lru 最不经常使用的放在最前面
         LinkedHashMap<String, String> lruItem = jobLRUMap.get(jobId);
         if (lruItem == null) {
             /**
@@ -61,7 +63,7 @@ public class ExecutorRouteLRU extends ExecutorRouter {
             }
         }
 
-        // load
+        // load 获取头部的第一个元素 也就是最久未操作的数据 accessOrder：true 会重新排序到最后
         String eldestKey = lruItem.entrySet().iterator().next().getKey();
         String eldestValue = lruItem.get(eldestKey);
         return eldestValue;

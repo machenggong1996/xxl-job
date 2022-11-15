@@ -11,6 +11,7 @@ import com.xxl.job.core.biz.model.TriggerParam;
 import java.util.List;
 
 /**
+ * 忙碌转移）按照顺序依次进行空闲检测，第一个空闲检测成功的机器选定为目标执行器并发起调度；
  * Created by xuxueli on 17/3/10.
  */
 public class ExecutorRouteBusyover extends ExecutorRouter {
@@ -23,6 +24,7 @@ public class ExecutorRouteBusyover extends ExecutorRouter {
             ReturnT<String> idleBeatResult = null;
             try {
                 ExecutorBiz executorBiz = XxlJobScheduler.getExecutorBiz(address);
+                // 判断任务id的线程是不是运行或者在队列里面
                 idleBeatResult = executorBiz.idleBeat(new IdleBeatParam(triggerParam.getJobId()));
             } catch (Exception e) {
                 logger.error(e.getMessage(), e);
@@ -36,6 +38,7 @@ public class ExecutorRouteBusyover extends ExecutorRouter {
 
             // beat success
             if (idleBeatResult.getCode() == ReturnT.SUCCESS_CODE) {
+                // 返回当前正在运行的地址
                 idleBeatResult.setMsg(idleBeatResultSB.toString());
                 idleBeatResult.setContent(address);
                 return idleBeatResult;

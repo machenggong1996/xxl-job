@@ -76,6 +76,7 @@ public class XxlJobTrigger {
                 shardingParam[1] = Integer.valueOf(shardingArr[1]);
             }
         }
+        // 分片策略要用for循环执行任务 其他策略只有一台机器执行任务
         if (ExecutorRouteStrategyEnum.SHARDING_BROADCAST==ExecutorRouteStrategyEnum.match(jobInfo.getExecutorRouteStrategy(), null)
                 && group.getRegistryList()!=null && !group.getRegistryList().isEmpty()
                 && shardingParam==null) {
@@ -149,6 +150,7 @@ public class XxlJobTrigger {
                     address = group.getRegistryList().get(0);
                 }
             } else {
+                // 根据设置的路由策略,执行路由器,获取返回结果   ,这里用到了策略模式
                 routeAddressResult = executorRouteStrategyEnum.getRouter().route(triggerParam, group.getRegistryList());
                 if (routeAddressResult.getCode() == ReturnT.SUCCESS_CODE) {
                     address = routeAddressResult.getContent();
@@ -161,6 +163,7 @@ public class XxlJobTrigger {
         // 4、trigger remote executor
         ReturnT<String> triggerResult = null;
         if (address != null) {
+            // 远程调用
             triggerResult = runExecutor(triggerParam, address);
         } else {
             triggerResult = new ReturnT<String>(ReturnT.FAIL_CODE, null);

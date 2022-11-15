@@ -11,15 +11,20 @@ import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
+ * （轮询）轮询
+ *
  * Created by xuxueli on 17/3/10.
  */
 public class ExecutorRouteRound extends ExecutorRouter {
 
+    // 任务id,执行次数
     private static ConcurrentMap<Integer, AtomicInteger> routeCountEachJob = new ConcurrentHashMap<>();
+    // 缓存过期时间戳
     private static long CACHE_VALID_TIME = 0;
 
     private static int count(int jobId) {
         // cache clear
+        // 如果当前时间 大于缓存时间 需要刷新
         if (System.currentTimeMillis() > CACHE_VALID_TIME) {
             routeCountEachJob.clear();
             CACHE_VALID_TIME = System.currentTimeMillis() + 1000*60*60*24;
@@ -39,6 +44,7 @@ public class ExecutorRouteRound extends ExecutorRouter {
 
     @Override
     public ReturnT<String> route(TriggerParam triggerParam, List<String> addressList) {
+        // addressList不变的情况下 会轮询到下一个地址
         String address = addressList.get(count(triggerParam.getJobId())%addressList.size());
         return new ReturnT<String>(address);
     }
