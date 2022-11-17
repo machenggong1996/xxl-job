@@ -20,7 +20,7 @@ public abstract class IJobHandler {
 	public abstract ReturnT<String> execute(String param) throws Exception;*/
 
 	/**
-	 * init handler, invoked when JobThread init
+	 * init handler, invoked when JobThread init 配合注解使用 执行核心方法之前执行哪个方法
 	 */
 	public void init() throws Exception {
 		// do something
@@ -28,7 +28,7 @@ public abstract class IJobHandler {
 
 
 	/**
-	 * destroy handler, invoked when JobThread destroy
+	 * destroy handler, invoked when JobThread destroy 核心方法执行之后 执行哪个方法
 	 */
 	public void destroy() throws Exception {
 		// do something

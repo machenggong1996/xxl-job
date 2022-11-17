@@ -49,24 +49,29 @@ public class XxlJobTrigger {
                                String addressList) {
 
         // load data
+        // 获取任务信息
         XxlJobInfo jobInfo = XxlJobAdminConfig.getAdminConfig().getXxlJobInfoDao().loadById(jobId);
         if (jobInfo == null) {
             logger.warn(">>>>>>>>>>>> trigger fail, jobId invalid，jobId={}", jobId);
             return;
         }
+        // 前端传入的参数判断
         if (executorParam != null) {
             jobInfo.setExecutorParam(executorParam);
         }
+        // 获取失败重试次数
         int finalFailRetryCount = failRetryCount>=0?failRetryCount:jobInfo.getExecutorFailRetryCount();
         XxlJobGroup group = XxlJobAdminConfig.getAdminConfig().getXxlJobGroupDao().load(jobInfo.getJobGroup());
 
         // cover addressList
+        // 录入执行器地址 前端传过来的不为空会覆盖数据库查出的地址
         if (addressList!=null && addressList.trim().length()>0) {
             group.setAddressType(1);
             group.setAddressList(addressList.trim());
         }
 
         // sharding param
+        // 分片参数
         int[] shardingParam = null;
         if (executorShardingParam!=null){
             String[] shardingArr = executorShardingParam.split("/");
@@ -116,7 +121,7 @@ public class XxlJobTrigger {
         ExecutorRouteStrategyEnum executorRouteStrategyEnum = ExecutorRouteStrategyEnum.match(jobInfo.getExecutorRouteStrategy(), null);    // route strategy
         String shardingParam = (ExecutorRouteStrategyEnum.SHARDING_BROADCAST==executorRouteStrategyEnum)?String.valueOf(index).concat("/").concat(String.valueOf(total)):null;
 
-        // 1、save log-id
+        // 1、save log-id 存储日志
         XxlJobLog jobLog = new XxlJobLog();
         jobLog.setJobGroup(jobInfo.getJobGroup());
         jobLog.setJobId(jobInfo.getId());
@@ -124,9 +129,9 @@ public class XxlJobTrigger {
         XxlJobAdminConfig.getAdminConfig().getXxlJobLogDao().save(jobLog);
         logger.debug(">>>>>>>>>>> xxl-job trigger start, jobId:{}", jobLog.getId());
 
-        // 2、init trigger-param
+        // 2、init trigger-param 参数拼装
         TriggerParam triggerParam = new TriggerParam();
-        triggerParam.setJobId(jobInfo.getId());
+        triggerParam.setJobId(jobInfo.getId()); // 任务id
         triggerParam.setExecutorHandler(jobInfo.getExecutorHandler());
         triggerParam.setExecutorParams(jobInfo.getExecutorParam());
         triggerParam.setExecutorBlockStrategy(jobInfo.getExecutorBlockStrategy());

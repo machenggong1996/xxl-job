@@ -16,7 +16,8 @@ import java.util.concurrent.*;
 
 /**
  * job lose-monitor instance
- *
+ *	1. 将超过十分钟 注册列表为空的任务标记为失败
+ *  2. 处理回调
  * @author xuxueli 2015-9-1 18:05:56
  */
 public class JobCompleteHelper {
@@ -152,7 +153,7 @@ public class JobCompleteHelper {
 	}
 
 	private ReturnT<String> callback(HandleCallbackParam handleCallbackParam) {
-		// valid log item
+		// valid log item 查询日志信息
 		XxlJobLog log = XxlJobAdminConfig.getAdminConfig().getXxlJobLogDao().load(handleCallbackParam.getLogId());
 		if (log == null) {
 			return new ReturnT<String>(ReturnT.FAIL_CODE, "log item not found.");

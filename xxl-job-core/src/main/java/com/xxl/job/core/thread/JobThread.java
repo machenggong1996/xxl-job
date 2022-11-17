@@ -146,7 +146,7 @@ public class JobThread extends Thread{
 
 									// init job context
 									XxlJobContext.setXxlJobContext(xxlJobContext);
-
+									// 实际执行
 									handler.execute();
 									return true;
 								}
@@ -209,6 +209,7 @@ public class JobThread extends Thread{
 			} finally {
                 if(triggerParam != null) {
                     // callback handler info
+					// 执行回调函数
                     if (!toStop) {
                         // commonm
                         TriggerCallbackThread.pushCallBack(new HandleCallbackParam(

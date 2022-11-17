@@ -27,7 +27,7 @@ public class XxlJobCompleter {
      */
     public static int updateHandleInfoAndFinish(XxlJobLog xxlJobLog) {
 
-        // finish
+        // finish 触发子任务
         finishJob(xxlJobLog);
 
         // text最大64kb 避免长度过长

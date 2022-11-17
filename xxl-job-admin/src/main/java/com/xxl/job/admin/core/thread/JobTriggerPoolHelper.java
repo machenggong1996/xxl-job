@@ -94,7 +94,7 @@ public class JobTriggerPoolHelper {
                 long start = System.currentTimeMillis();
 
                 try {
-                    // do trigger
+                    // do trigger 触发任务
                     XxlJobTrigger.trigger(jobId, triggerType, failRetryCount, executorShardingParam, executorParam, addressList);
                 } catch (Exception e) {
                     logger.error(e.getMessage(), e);
