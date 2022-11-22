@@ -13,6 +13,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * job log report helper
+ * 任务日志统计 xxl_job_log->xxl_job_log_report
  *
  * @author xuxueli 2019-11-22
  */

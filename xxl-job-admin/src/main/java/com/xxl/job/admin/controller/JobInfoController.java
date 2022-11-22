@@ -97,7 +97,19 @@ public class JobInfoController {
 			throw new RuntimeException(I18nUtil.getString("system_permission_limit") + "[username="+ loginUser.getUsername() +"]");
 		}
 	}
-	
+
+	/**
+	 * 任务管理界面分页查询
+	 *
+	 * @param start
+	 * @param length
+	 * @param jobGroup
+	 * @param triggerStatus
+	 * @param jobDesc
+	 * @param executorHandler
+	 * @param author
+	 * @return
+	 */
 	@RequestMapping("/pageList")
 	@ResponseBody
 	public Map<String, Object> pageList(@RequestParam(required = false, defaultValue = "0") int start,  
@@ -106,7 +118,12 @@ public class JobInfoController {
 		
 		return xxlJobService.pageList(start, length, jobGroup, triggerStatus, jobDesc, executorHandler, author);
 	}
-	
+
+	/**
+	 * xxl_job_info表
+	 * @param jobInfo
+	 * @return
+	 */
 	@RequestMapping("/add")
 	@ResponseBody
 	public ReturnT<String> add(XxlJobInfo jobInfo) {
@@ -169,6 +186,7 @@ public class JobInfoController {
 		List<String> result = new ArrayList<>();
 		try {
 			Date lastTime = new Date();
+			// 获取未来5次执行时间
 			for (int i = 0; i < 5; i++) {
 				lastTime = JobScheduleHelper.generateNextValidTime(paramXxlJobInfo, lastTime);
 				if (lastTime != null) {

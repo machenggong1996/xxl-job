@@ -188,7 +188,9 @@ public class JobThread extends Thread{
 
 				} else {
 					if (idleTimes > 30) {
+						// 循环30次
 						if(triggerQueue.size() == 0) {	// avoid concurrent trigger causes jobId-lost
+							// 没有任务了会停止线程
 							XxlJobExecutor.removeJobThread(jobId, "excutor idel times over limit.");
 						}
 					}

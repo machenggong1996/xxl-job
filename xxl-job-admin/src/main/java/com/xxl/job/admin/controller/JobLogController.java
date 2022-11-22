@@ -135,11 +135,20 @@ public class JobLogController {
 		return "joblog/joblog.detail";
 	}
 
+	/**
+	 * 查看日志
+	 * @param executorAddress
+	 * @param triggerTime
+	 * @param logId
+	 * @param fromLineNum 从第几行开始
+	 * @return
+	 */
 	@RequestMapping("/logDetailCat")
 	@ResponseBody
 	public ReturnT<LogResult> logDetailCat(String executorAddress, long triggerTime, long logId, int fromLineNum){
 		try {
 			ExecutorBiz executorBiz = XxlJobScheduler.getExecutorBiz(executorAddress);
+			// 远程调用 获取日志文件数据
 			ReturnT<LogResult> logResult = executorBiz.log(new LogParam(triggerTime, logId, fromLineNum));
 
 			// is end

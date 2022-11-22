@@ -76,6 +76,7 @@ public interface XxlJobService {
 
 	/**
 	 * chart info
+	 * 默认传时间七天
 	 *
 	 * @param startDate
 	 * @param endDate
