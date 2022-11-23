@@ -71,7 +71,7 @@ public class  ExecutorRouteConsistentHash extends ExecutorRouter {
         }
 
         long jobHash = hash(String.valueOf(jobId));
-        // tailMap 获取尾部 jobHash 个数据
+        // tailMap 获取尾部 比jobHash大的数据
         SortedMap<Long, String> lastRing = addressRing.tailMap(jobHash);
         if (!lastRing.isEmpty()) {
             // 获取lastRing第一个
